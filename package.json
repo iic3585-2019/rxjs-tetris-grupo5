@@ -1,0 +1,19 @@
+{
+  "name": "tarea2-grupo5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rxjs": "^6.4.0",
+    "webpack": "^4.29.6",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.0"
+  }
+}
