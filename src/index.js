@@ -60,6 +60,12 @@ const generate_row = (row_number, number_of_cols) => {
     return html
 }
 
+import { PieceCreator, left_spin } from "./pieces"
+
+let my_z = PieceCreator["Z"](3, 3)
+console.log(my_z)
+console.log(left_spin(my_z))
+
 if (module.hot) {
     module.hot.accept();
 }
