@@ -21,50 +21,24 @@ function logItem(val) {
     document.getElementById("list").appendChild(node)
 }*/
 
-/* Habilita el uso de Jquery */
-import $ from 'jquery';
-window.jQuery = $;
-window.$ = $;
 
-var _ = require('lodash')
+import $ from 'jquery'
+window.jQuery = $
+window.$ = $
 
-/* Esta función se llama cuando el DOM está listo */
-$(document).ready(function () {
-    let grid_player1 = $("#tetris-container-1")
-    let grid_player2 = $("#tetris-container-2")
-    // Dibujamos la grilla
-    draw_grid(grid_player1)
-    draw_grid(grid_player2)
-})
+import { PieceCreator, spin } from "./pieces"
+import { initialize_grid, update_grid } from "./draw"
 
-const NUMBER_OF_COLUMNS = 8
-const NUMBER_OF_ROWS = 12
+initialize_grid()
 
-const draw_grid = (target) => {
-    _.range(NUMBER_OF_ROWS).forEach((i) => {
-        target.append(
-            generate_row(i, NUMBER_OF_COLUMNS)
-        )
-    })
-}
-
-const generate_row = (row_number, number_of_cols) => {
-    let html = ""
-    html += `<div class="columns is-centered" id="row-${row_number}">`
-    _.range(number_of_cols).forEach(x => {
-        html += `<div class="column is-narrow" id="col-${x}">`
-        html += "<div class='block'> </div>"
-        html += "</div>"
-    })
-    html += "</div>"
-    return html
-}
-
-import { PieceCreator, left_spin } from "./pieces"
 
 let my_z = PieceCreator["Z"](3, 3)
-console.log(my_z)
-console.log(left_spin(my_z))
+
+$(document).ready(function () {
+    update_grid("tetris-container-1", [my_z], null)
+    update_grid("tetris-container-2", [spin(my_z, "left")], null)
+})
+
 
 if (module.hot) {
     module.hot.accept();
