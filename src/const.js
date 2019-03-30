@@ -4,6 +4,8 @@ export const PLAYER_2 = "PLAYER_2"
 export const MOVEMENT = "MOVEMENT"
 export const LEFT = "LEFT"
 export const RIGHT = "RIGHT"
+export const DOWN = "DOWN"
+export const ROTATE = "ROTATE"
 
 export const REDRAW = "REDRAW"
 

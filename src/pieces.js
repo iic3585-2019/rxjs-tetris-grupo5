@@ -1,4 +1,4 @@
-import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT } from './const'
+import { LEFT, RIGHT } from './const'
 
 export const PieceCreator = {
     "Z": (x, y) => {
@@ -16,9 +16,10 @@ export const PieceCreator = {
     }
 }
 
-// Entra un objecto pieza y una direccion de rotacion 'left' o 'right'
+// Recibe objeto pieza y una direccion de rotacion LEFT o RIGHT
+// Retorna el objeto pieza resultante
 export const spin = (piece, rotation) => {
-    const transformation = (rotation === "left") ? (point) => [point[1] * -1, point[0]] : (point) => [point[1], point[0] * -1]
+    const transformation = (rotation === LEFT) ? (point) => [point[1] * -1, point[0]] : (point) => [point[1], point[0] * -1]
     const [x, y] = piece["points"][piece["center"]]
     const centered_points = center_points(piece["points"], x, y)
 

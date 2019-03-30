@@ -5,10 +5,9 @@ window.$ = $
 import { PieceCreator, spin, move } from "./pieces"
 import { initialize_grid, draw_static_pieces, draw_current_piece, update_current_piece } from "./draw"
 import Tetris from "./tetris"
-import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, REDRAW } from './const'
+import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, REDRAW, ROTATE_LEFT, ROTATE_RIGHT, ROTATE } from './const'
 
 initialize_grid()
-
 
 let player1 = new Tetris("tetris-container-1")
 let player2 = new Tetris("tetris-container-2")
@@ -20,18 +19,12 @@ player1.set_static_pieces([
 
 player1.set_current_piece(PieceCreator["Z"](3, 10))
 
-
-
-//let subject_player1 = new Subject()
-//let observable_player1 = subject_player1.asObservable()
-
 // Voy a ver lo del movimiento
 player1.get_observable().subscribe(
     (x) => {
+        const player = x.target === PLAYER_1 ? player1 : player2
         if (x.type === MOVEMENT) {
-            const player = x.target === PLAYER_1 ? player1 : player2
-
-            let moved_piece = move(player.current_piece, x.direction)
+            let moved_piece = move(player.get_current_piece(), x.direction)
 
             /* TODO: Acá se tiene quje cheackear que la pieza movida sea válida. 
             Tiene que cumlir lo siguiente
@@ -42,6 +35,13 @@ player1.get_observable().subscribe(
             player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": moved_piece })
 
             player.set_current_piece(moved_piece)
+        }
+        else if (x.type === ROTATE) {
+            let spined_piece = spin(player.get_current_piece(), x.direction)
+
+            player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": spined_piece })
+
+            player.set_current_piece(spined_piece)
         }
     },
     (error) => {
@@ -84,6 +84,14 @@ $(document).on('keydown', (event) => {
         // Right Arrow
         case 39:
             player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": RIGHT })
+            break
+        // Z
+        case 90:
+            player1.dispatch_event({ "target": PLAYER_1, "type": ROTATE, "direction": LEFT })
+            break
+        // X
+        case 88:
+            player1.dispatch_event({ "target": PLAYER_1, "type": ROTATE, "direction": RIGHT })
             break
         default:
             console.log("Has apretado la tecla con el sig cod: " + event.keyCode)
