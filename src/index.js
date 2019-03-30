@@ -5,7 +5,9 @@ window.$ = $
 import { spin, move, generate_piece } from "./pieces"
 import { initialize_grid, draw_static_pieces, draw_current_piece, update_current_piece } from "./draw"
 import Tetris from "./tetris"
-import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, REDRAW, ROTATE, START_X, START_Y } from './const'
+import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, REDRAW, ROTATE, START_X, START_Y, DOWN } from './const'
+import { movement_observer } from './observers/movement';
+import { draw_observer } from './observers/draw';
 
 initialize_grid()
 
@@ -22,17 +24,17 @@ let player2 = new Tetris("tetris-container-2")
 // ==============================================================================
 // MOVIMIENTO
 // ==============================================================================
-player1.get_observable().subscribe(
+
+movement_observer(player1.get_observable(), player1, player2)
+movement_observer(player2.get_observable(), player1, player2)
+
+/*player1.get_observable().subscribe(
     (x) => {
         const player = x.target === PLAYER_1 ? player1 : player2
         if (x.type === MOVEMENT) {
             let moved_piece = move(player.get_current_piece(), x.direction)
 
-            /* TODO: Acá se tiene quje cheackear que la pieza movida sea válida. 
-            Tiene que cumlir lo siguiente
-            - No salirse de la grilla
-            - No estar chocando con otra cosa 
-            */
+            
 
             player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": moved_piece })
 
@@ -41,10 +43,7 @@ player1.get_observable().subscribe(
         else if (x.type === ROTATE) {
             let spined_piece = spin(player.get_current_piece(), x.direction)
 
-            /*
-            TODO: Por simplicidad, se va solo a checkear si es que la pieza rotada no se sale de la grilla y si no choca con nada.
-            Normalmente también se tendría que ver que si va a chocar permita la rotación moviendo la pieza a un lado
-            */
+           
 
             player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": spined_piece })
 
@@ -57,12 +56,16 @@ player1.get_observable().subscribe(
     () => {
         console.log("Completed!")
     }
-)
+)*/
 
 // ==============================================================================
 // DIBUJO
 // ==============================================================================
-player1.get_observable().subscribe(
+
+draw_observer(player1.get_observable(), player1, player2)
+draw_observer(player2.get_observable(), player1, player2)
+
+/*player1.get_observable().subscribe(
     (x) => {
         if (x.type === REDRAW) {
             const target = x.target === PLAYER_1 ? player1.get_container() : player2.get_container()
@@ -75,7 +78,7 @@ player1.get_observable().subscribe(
     () => {
         console.log("Completed!")
     }
-)
+)*/
 
 $(document).on('click', '#start-button', function () {
     player1.set_current_piece(generate_piece(START_X, START_Y))
@@ -83,6 +86,13 @@ $(document).on('click', '#start-button', function () {
 
     draw_current_piece(player1.get_container(), player1.get_current_piece())
     draw_current_piece(player2.get_container(), player2.get_current_piece())
+
+    const i = setInterval(() => {
+        player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": DOWN })
+        player2.dispatch_event({ "target": PLAYER_2, "type": MOVEMENT, "direction": DOWN })
+    }, 2000)
+
+    // clearInterval(i)
 
     // ================================================================================================
     // TECLAS

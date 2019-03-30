@@ -1,4 +1,4 @@
-import { LEFT, RIGHT } from './const'
+import { LEFT, RIGHT, DOWN } from './const'
 var _ = require('lodash')
 
 const PIECES = [
@@ -58,6 +58,12 @@ export const move = (piece, direction) => {
                 return [point[0] + 1, point[1]]
             })
 
+            return { ...piece, "points": moved_points }
+
+        case DOWN:
+            moved_points = piece["points"].map((point) => {
+                return [point[0], point[1] - 1]
+            })
             return { ...piece, "points": moved_points }
         default:
             console.log("Has apretado la tecla con el sig cod: " + event.keyCode)
