@@ -2,7 +2,7 @@ import $ from 'jquery'
 window.jQuery = $
 window.$ = $
 
-import { PieceCreator, spin, move } from "./pieces"
+import { spin, move, generate_piece } from "./pieces"
 import { initialize_grid, draw_static_pieces, draw_current_piece, update_current_piece } from "./draw"
 import Tetris from "./tetris"
 import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, REDRAW, ROTATE_LEFT, ROTATE_RIGHT, ROTATE } from './const'
@@ -13,11 +13,11 @@ let player1 = new Tetris("tetris-container-1")
 let player2 = new Tetris("tetris-container-2")
 
 player1.set_static_pieces([
-    PieceCreator["Z"](0, 2),
-    PieceCreator["Z"](4, 2)
+    generate_piece(0, 2),
+    generate_piece(4, 2)
 ])
 
-player1.set_current_piece(PieceCreator["Z"](3, 10))
+player1.set_current_piece(generate_piece(3, 10))
 
 // Voy a ver lo del movimiento
 player1.get_observable().subscribe(

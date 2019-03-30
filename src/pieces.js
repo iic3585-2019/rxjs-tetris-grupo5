@@ -1,24 +1,39 @@
 import { LEFT, RIGHT } from './const'
+var _ = require('lodash')
 
-export const PieceCreator = {
-    "Z": (x, y) => {
+const PIECES = [
+    // Z
+    (x, y) => {
         return {
+            "name": "Z",
             "points": [[x, y], [x + 1, y], [x + 1, y - 1], [x + 2, y - 1]],
             "center": 2,
             "color": "#6200EE"
         }
     },
-    "O": (x, y) => {
+    // O
+    (x, y) => {
         return {
+            "name": "O",
             "points": [[x, y], [x + 1, y], [x, y - 1], [x + 1, y - 1]],
-            "center": 0
+            "center": 0,
+            "color": "#F7990C"
         }
     }
+]
+
+export const generate_piece = (x, y) => {
+    return PIECES[_.random(0, PIECES.length - 1)](x, y)
 }
 
 // Recibe objeto pieza y una direccion de rotacion LEFT o RIGHT
 // Retorna el objeto pieza resultante
 export const spin = (piece, rotation) => {
+    // La O no se rota
+    if (piece["name"] === "O") {
+        return piece
+    }
+
     const transformation = (rotation === LEFT) ? (point) => [point[1] * -1, point[0]] : (point) => [point[1], point[0] * -1]
     const [x, y] = piece["points"][piece["center"]]
     const centered_points = center_points(piece["points"], x, y)
