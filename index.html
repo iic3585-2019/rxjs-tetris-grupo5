@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>RxJS Demo</title>
+    <title>Tetris - Grupo 5</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css">
     <script src="/js/lodash.js"></script>
     <style>
@@ -16,18 +16,30 @@
         width: 30px;
         height: 30px;
     }
+    #game-container{
+        margin-top: 30px;
+    }
     </style>
 </head>
 <body>
-    <h1>RxJS Demo</h1>
-
-    Inicio del tetris container 
-    <div class="columns">
-        <div class="column">
-            <div id="tetris-container-1"></div>
+    <section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+        <h1 class="title">
+            Tetris
+        </h1>
         </div>
-        <div class="column">
-            <div id="tetris-container-2"></div>
+    </div>
+    </section>
+
+    <div id="game-container" class="container">
+        <div class="columns">
+            <div class="column">
+                <div id="tetris-container-1"></div>
+            </div>
+            <div class="column">
+                <div id="tetris-container-2"></div>
+            </div>
         </div>
     </div>
 
