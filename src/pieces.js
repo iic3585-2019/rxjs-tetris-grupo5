@@ -1,3 +1,5 @@
+import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT } from './const'
+
 export const PieceCreator = {
     "Z": (x, y) => {
         return {
@@ -14,15 +16,36 @@ export const PieceCreator = {
     }
 }
 
+// Entra un objecto pieza y una direccion de rotacion 'left' o 'right'
 export const spin = (piece, rotation) => {
-
     const transformation = (rotation === "left") ? (point) => [point[1] * -1, point[0]] : (point) => [point[1], point[0] * -1]
-
-
     const [x, y] = piece["points"][piece["center"]]
     const centered_points = center_points(piece["points"], x, y)
 
     return { ...piece, "points": restore_points(centered_points.map(transformation), x, y) }
+}
+
+
+export const move = (piece, direction) => {
+    let moved_points = [...piece["points"]]
+    switch (direction) {
+
+        case LEFT:
+            moved_points = piece["points"].map((point) => {
+                return [point[0] - 1, point[1]]
+            })
+
+            return { ...piece, "points": moved_points }
+
+        case RIGHT:
+            moved_points = piece["points"].map((point) => {
+                return [point[0] + 1, point[1]]
+            })
+
+            return { ...piece, "points": moved_points }
+        default:
+            console.log("Has apretado la tecla con el sig cod: " + event.keyCode)
+    }
 }
 
 const center_points = (points, x, y) => {
