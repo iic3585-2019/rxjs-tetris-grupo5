@@ -5,21 +5,23 @@ window.$ = $
 import { spin, move, generate_piece } from "./pieces"
 import { initialize_grid, draw_static_pieces, draw_current_piece, update_current_piece } from "./draw"
 import Tetris from "./tetris"
-import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, REDRAW, ROTATE_LEFT, ROTATE_RIGHT, ROTATE } from './const'
+import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, REDRAW, ROTATE, START_X, START_Y } from './const'
 
 initialize_grid()
 
 let player1 = new Tetris("tetris-container-1")
 let player2 = new Tetris("tetris-container-2")
 
-player1.set_static_pieces([
+/*player1.set_static_pieces([
     generate_piece(0, 2),
     generate_piece(4, 2)
-])
+])*/
 
-player1.set_current_piece(generate_piece(3, 10))
+/*player1.set_current_piece(generate_piece(3, 10))*/
 
-// Voy a ver lo del movimiento
+// ==============================================================================
+// MOVIMIENTO
+// ==============================================================================
 player1.get_observable().subscribe(
     (x) => {
         const player = x.target === PLAYER_1 ? player1 : player2
@@ -39,6 +41,11 @@ player1.get_observable().subscribe(
         else if (x.type === ROTATE) {
             let spined_piece = spin(player.get_current_piece(), x.direction)
 
+            /*
+            TODO: Por simplicidad, se va solo a checkear si es que la pieza rotada no se sale de la grilla y si no choca con nada.
+            Normalmente también se tendría que ver que si va a chocar permita la rotación moviendo la pieza a un lado
+            */
+
             player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": spined_piece })
 
             player.set_current_piece(spined_piece)
@@ -52,7 +59,9 @@ player1.get_observable().subscribe(
     }
 )
 
-// Voy a ver lo del dibujo
+// ==============================================================================
+// DIBUJO
+// ==============================================================================
 player1.get_observable().subscribe(
     (x) => {
         if (x.type === REDRAW) {
@@ -68,36 +77,42 @@ player1.get_observable().subscribe(
     }
 )
 
-// subject_player1.next("Buena choro")
+$(document).on('click', '#start-button', function () {
+    player1.set_current_piece(generate_piece(START_X, START_Y))
+    player2.set_current_piece(generate_piece(START_X, START_Y))
 
-$(document).ready(function () {
-    draw_static_pieces(player1.get_container(), player1.get_static_pieces())
     draw_current_piece(player1.get_container(), player1.get_current_piece())
+    draw_current_piece(player2.get_container(), player2.get_current_piece())
+
+    // ================================================================================================
+    // TECLAS
+    // ================================================================================================
+    $(document).on('keydown', (event) => {
+        switch (event.keyCode) {
+            // Left Arrow
+            case 37:
+                player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": LEFT })
+                break
+            // Right Arrow
+            case 39:
+                player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": RIGHT })
+                break
+            // Z
+            case 90:
+                player1.dispatch_event({ "target": PLAYER_1, "type": ROTATE, "direction": LEFT })
+                break
+            // X
+            case 88:
+                player1.dispatch_event({ "target": PLAYER_1, "type": ROTATE, "direction": RIGHT })
+                break
+            default:
+                console.log("Has apretado la tecla con el sig cod: " + event.keyCode)
+        }
+    })
 })
 
-$(document).on('keydown', (event) => {
-    switch (event.keyCode) {
-        // Left Arrow
-        case 37:
-            player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": LEFT })
-            break
-        // Right Arrow
-        case 39:
-            player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": RIGHT })
-            break
-        // Z
-        case 90:
-            player1.dispatch_event({ "target": PLAYER_1, "type": ROTATE, "direction": LEFT })
-            break
-        // X
-        case 88:
-            player1.dispatch_event({ "target": PLAYER_1, "type": ROTATE, "direction": RIGHT })
-            break
-        default:
-            console.log("Has apretado la tecla con el sig cod: " + event.keyCode)
-    }
-})
-
+// draw_static_pieces(player1.get_container(), player1.get_static_pieces())
+// draw_current_piece(player1.get_container(), player1.get_current_piece())
 
 if (module.hot) {
     module.hot.accept();
