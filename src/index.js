@@ -2,10 +2,9 @@ import $ from 'jquery'
 window.jQuery = $
 window.$ = $
 
-import { spin, move, generate_piece } from "./pieces"
-import { initialize_grid, draw_static_pieces, draw_current_piece, update_current_piece } from "./draw"
+import { initialize_grid, draw_current_piece } from "./draw"
 import Tetris from "./tetris"
-import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, REDRAW, ROTATE, START_X, START_Y, DOWN, SECS_DOWN } from './const'
+import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, ROTATE, DOWN, SECS_DOWN } from './const'
 import { movement_observer } from './observers/movement';
 import { draw_observer } from './observers/draw';
 

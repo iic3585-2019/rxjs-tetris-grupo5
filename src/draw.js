@@ -18,8 +18,6 @@ export const initialize_grid = () => {
     })
 }
 
-
-
 const draw_grid = (target) => {
     _.range(NUMBER_OF_ROWS).forEach((i) => {
         target.prepend(
