@@ -1,12 +1,15 @@
-import { PLAYER_1, REDRAW } from "../const";
-import { update_current_piece } from "../draw";
+import { PLAYER_1, REDRAW, DRAW } from "../const";
+import { update_current_piece, draw_current_piece } from "../draw";
 
 export const draw_observer = (observable, player1, player2) => {
     observable.subscribe(
         (x) => {
+            const player = x.target === PLAYER_1 ? player1 : player2
             if (x.type === REDRAW) {
-                const target = x.target === PLAYER_1 ? player1.get_container() : player2.get_container()
-                update_current_piece(target, x["old"], x["updated"])
+                update_current_piece(player.get_container(), x["old"], x["updated"])
+            }
+            else if (x.type === DRAW) {
+                draw_current_piece(player.get_container(), x.piece)
             }
         },
         (error) => {
