@@ -83,4 +83,20 @@ export default class Tetris {
         })
     }
 
+    check_score_row() {
+        let scored_rows = []
+        this.pieces_as_matrix.forEach((row,index) => {
+            console.log(row)
+            if(row.some(x => x===0)){
+                // console.log("NO HAY FILAS COMPLETAS")   
+                console.log("\n") 
+            }
+            else {
+                console.log("LA FILA"+index+"ESTA COMPLETA")
+                scored_rows.push(index)
+            }
+        })
+        return scored_rows        
+    }
+
 }

@@ -15,8 +15,6 @@ export const movement_observer = (observable, player1, player2) => {
                 - No estar chocando con otra cosa 
                 */
 
-
-
                 // Si la pieza es válida se debe re-dibuja
                 player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": moved_piece })
 
@@ -24,7 +22,8 @@ export const movement_observer = (observable, player1, player2) => {
                 if (player.check_landing(moved_piece)) {
                     // Se añade la pieza como estatica
                     player.append_static_piece(moved_piece)
-
+                    
+                    player.check_score_row()
                     // Se checkea si se hizo combo
 
                     // Se setea una nueva pieza

@@ -55,6 +55,9 @@ $(document).on('click', '#start-button', function () {
             case 39:
                 player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": RIGHT })
                 break
+            case 40:
+                player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": DOWN })
+                break
             // Z
             case 90:
                 player1.dispatch_event({ "target": PLAYER_1, "type": ROTATE, "direction": LEFT })
