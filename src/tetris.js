@@ -75,6 +75,12 @@ export default class Tetris {
         })
     }
 
-
+    is_piece_invalid(piece) {
+        return piece["points"].some((point) => {
+            if (this.pieces_as_matrix[point[0]][point[1]] === 1) {
+                return true
+            }
+        })
+    }
 
 }
