@@ -27,7 +27,7 @@ export default class Tetris {
         this.pieces.push(piece)
 
         piece["points"].forEach((point) => {
-            this.pieces_as_matrix[point[0]][point[1]] = 1
+            this.pieces_as_matrix[point[1]][point[0]] = 1
         })
     }
 
@@ -37,6 +37,12 @@ export default class Tetris {
 
     set_new_current_piece() {
         this.current_piece = generate_piece(START_X, START_Y)
+    }
+
+    show_matrix() {
+        this.pieces_as_matrix.forEach((row) => {
+            console.log(row)
+        })
     }
 
     dispatch_event(event) {
@@ -69,7 +75,7 @@ export default class Tetris {
             }
             // Caso en que algun punto de la pieza tiene exactamente abajo de el una
             // pieza estática
-            else if (this.pieces_as_matrix[point[0]][point[1] - 1] === 1) {
+            else if (this.pieces_as_matrix[point[1] - 1][point[0]] === 1) {
                 return true
             }
         })
@@ -77,7 +83,7 @@ export default class Tetris {
 
     is_piece_invalid(piece) {
         return piece["points"].some((point) => {
-            if (this.pieces_as_matrix[point[0]][point[1]] === 1) {
+            if (this.pieces_as_matrix[point[1]][point[0]] === 1) {
                 return true
             }
         })

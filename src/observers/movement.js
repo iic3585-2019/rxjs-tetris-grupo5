@@ -11,7 +11,6 @@ export const movement_observer = (observable, player1, player2) => {
 
                 /* TODO: Acá se tiene quje cheackear que la pieza movida sea válida. 
                 Tiene que cumlir lo siguiente
-                - No salirse de la grilla
                 - No estar chocando con otra cosa 
                 */
 
