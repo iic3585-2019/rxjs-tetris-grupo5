@@ -40,6 +40,8 @@ export default class Tetris {
     }
 
     dispatch_event(event) {
+        console.log("[EVENT LOGGER]")
+        console.log(event)
         this.subject.next(event)
     }
 
@@ -62,9 +64,6 @@ export default class Tetris {
     check_landing(piece) {
         return piece["points"].some((point) => {
             // Caso en que algun punto de la pieza llego a la base
-            console.log("Voy a mostrar el Y del punto")
-            console.log(point[1])
-            // debugger
             if (point[1] === 0) {
                 return true
             }

@@ -1,4 +1,4 @@
-import { LEFT, RIGHT, DOWN } from './const'
+import { LEFT, RIGHT, DOWN, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS } from './const'
 var _ = require('lodash')
 
 const PIECES = [
@@ -50,23 +50,31 @@ export const move = (piece, direction) => {
             moved_points = piece["points"].map((point) => {
                 return [point[0] - 1, point[1]]
             })
-
-            return { ...piece, "points": moved_points }
-
+            break
         case RIGHT:
             moved_points = piece["points"].map((point) => {
                 return [point[0] + 1, point[1]]
             })
-
-            return { ...piece, "points": moved_points }
-
+            break
         case DOWN:
             moved_points = piece["points"].map((point) => {
                 return [point[0], point[1] - 1]
             })
-            return { ...piece, "points": moved_points }
-        default:
-            console.log("Has apretado la tecla con el sig cod: " + event.keyCode)
+            break
+    }
+    const is_invalid = moved_points.some((point) => {
+        if ((point[1] < 0) || (point[1] >= NUMBER_OF_ROWS)) {
+            return true
+        }
+        else if ((point[0] < 0) || (point[0] >= NUMBER_OF_COLUMNS)) {
+            return true
+        }
+    })
+    if (is_invalid) {
+        return piece
+    }
+    else {
+        return { ...piece, "points": moved_points }
     }
 }
 

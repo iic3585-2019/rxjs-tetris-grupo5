@@ -15,7 +15,9 @@ export const movement_observer = (observable, player1, player2) => {
                 - No estar chocando con otra cosa 
                 */
 
-                // Si la pieza es válida se re-dibuja
+
+
+                // Si la pieza es válida se debe re-dibuja
                 player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": moved_piece })
 
                 // Se checkean si es que la pieza choca con algo
@@ -28,6 +30,7 @@ export const movement_observer = (observable, player1, player2) => {
                     // Se setea una nueva pieza
                     player.set_new_current_piece()
 
+                    // Se dibuja la pieza por primera vez
                     player.dispatch_event({ "target": x.target, "type": DRAW, "piece": player.get_current_piece() })
                 }
 
