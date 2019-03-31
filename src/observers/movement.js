@@ -1,5 +1,6 @@
-import { PLAYER_1, REDRAW, MOVEMENT, ROTATE } from "../const";
+import { PLAYER_1, REDRAW, MOVEMENT, ROTATE, DRAW } from "../const";
 import { move, spin } from "../pieces";
+var _ = require('lodash')
 
 export const movement_observer = (observable, player1, player2) => {
     observable.subscribe(
@@ -14,9 +15,30 @@ export const movement_observer = (observable, player1, player2) => {
                 - No estar chocando con otra cosa 
                 */
 
+
+
+                // Si la pieza es válida se debe re-dibuja
                 player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": moved_piece })
 
-                player.set_current_piece(moved_piece)
+                // Se checkean si es que la pieza choca con algo
+                if (player.check_landing(moved_piece)) {
+                    // Se añade la pieza como estatica
+                    player.append_static_piece(moved_piece)
+
+                    // Se checkea si se hizo combo
+
+                    // Se setea una nueva pieza
+                    player.set_new_current_piece()
+
+                    // Se dibuja la pieza por primera vez
+                    player.dispatch_event({ "target": x.target, "type": DRAW, "piece": player.get_current_piece() })
+                }
+
+                // Caso en que la pieza sigue en juego, entonces se setea como current piece
+                else {
+                    player.set_current_piece(moved_piece)
+                }
+
             }
             else if (x.type === ROTATE) {
                 let spined_piece = spin(player.get_current_piece(), x.direction)

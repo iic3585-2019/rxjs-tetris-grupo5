@@ -5,7 +5,7 @@ window.$ = $
 import { spin, move, generate_piece } from "./pieces"
 import { initialize_grid, draw_static_pieces, draw_current_piece, update_current_piece } from "./draw"
 import Tetris from "./tetris"
-import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, REDRAW, ROTATE, START_X, START_Y, DOWN } from './const'
+import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, REDRAW, ROTATE, START_X, START_Y, DOWN, SECS_DOWN } from './const'
 import { movement_observer } from './observers/movement';
 import { draw_observer } from './observers/draw';
 
@@ -29,16 +29,16 @@ draw_observer(player1.get_observable(), player1, player2)
 draw_observer(player2.get_observable(), player1, player2)
 
 $(document).on('click', '#start-button', function () {
-    player1.set_current_piece(generate_piece(START_X, START_Y))
-    player2.set_current_piece(generate_piece(START_X, START_Y))
+    player1.set_new_current_piece()
+    player2.set_new_current_piece()
 
     draw_current_piece(player1.get_container(), player1.get_current_piece())
     draw_current_piece(player2.get_container(), player2.get_current_piece())
 
     const i = setInterval(() => {
         player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": DOWN })
-        player2.dispatch_event({ "target": PLAYER_2, "type": MOVEMENT, "direction": DOWN })
-    }, 2000)
+        // player2.dispatch_event({ "target": PLAYER_2, "type": MOVEMENT, "direction": DOWN })
+    }, 1000 * SECS_DOWN)
 
     // clearInterval(i)
 
