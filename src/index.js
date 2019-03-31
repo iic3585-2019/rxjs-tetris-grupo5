@@ -54,6 +54,7 @@ $(document).on('click', '#start-button', function () {
             case 39:
                 player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": RIGHT })
                 break
+            // Down Arrow
             case 40:
                 player1.dispatch_event({ "target": PLAYER_1, "type": MOVEMENT, "direction": DOWN })
                 break

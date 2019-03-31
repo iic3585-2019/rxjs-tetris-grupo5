@@ -92,16 +92,11 @@ export default class Tetris {
     check_score_row() {
         let scored_rows = []
         this.pieces_as_matrix.forEach((row,index) => {
-            console.log(row)
-            if(row.some(x => x===0)){
-                // console.log("NO HAY FILAS COMPLETAS")   
-                console.log("\n") 
-            }
-            else {
-                console.log("LA FILA"+index+"ESTA COMPLETA")
+            if(!row.some(x => x===0)){
                 scored_rows.push(index)
             }
         })
+        console.log("scored_rows= "+scored_rows)
         return scored_rows        
     }
 
