@@ -1,5 +1,5 @@
 import { PLAYER_1, REDRAW, MOVEMENT, ROTATE } from "../const";
-import { move } from "../pieces";
+import { move, spin } from "../pieces";
 
 export const movement_observer = (observable, player1, player2) => {
     observable.subscribe(
