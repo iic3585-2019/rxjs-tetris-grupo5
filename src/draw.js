@@ -1,6 +1,6 @@
 /* Habilita el uso de Jquery */
 import $ from 'jquery'
-import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS } from './const'
+import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, PLAYER_1 } from './const'
 window.jQuery = $
 window.$ = $
 
@@ -64,4 +64,13 @@ export const draw_current_piece = (target, piece) => {
 export const update_current_piece = (target, old, updated) => {
     paint_piece(target, old, "gray")
     paint_piece(target, updated, updated["color"])
+}
+
+export const game_over = (winner) => {
+
+    const winner_message = (winner === PLAYER_1) ? "El jugador 1 ha ganado!" : "El jugador 2 ha ganado!"
+
+    $("#overlay").css("display", "block")
+    $(".overlay-text").append("<br/ >" + winner_message)
+
 }
