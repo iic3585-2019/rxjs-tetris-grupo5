@@ -14,13 +14,6 @@ initialize_grid()
 let player1 = new Tetris("tetris-container-1")
 let player2 = new Tetris("tetris-container-2")
 
-/*player1.set_static_pieces([
-    generate_piece(0, 2),
-    generate_piece(4, 2)
-])*/
-
-/*player1.set_current_piece(generate_piece(3, 10))*/
-
 // ==============================================================================
 // MOVIMIENTO
 // ==============================================================================
@@ -28,57 +21,12 @@ let player2 = new Tetris("tetris-container-2")
 movement_observer(player1.get_observable(), player1, player2)
 movement_observer(player2.get_observable(), player1, player2)
 
-/*player1.get_observable().subscribe(
-    (x) => {
-        const player = x.target === PLAYER_1 ? player1 : player2
-        if (x.type === MOVEMENT) {
-            let moved_piece = move(player.get_current_piece(), x.direction)
-
-            
-
-            player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": moved_piece })
-
-            player.set_current_piece(moved_piece)
-        }
-        else if (x.type === ROTATE) {
-            let spined_piece = spin(player.get_current_piece(), x.direction)
-
-           
-
-            player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": spined_piece })
-
-            player.set_current_piece(spined_piece)
-        }
-    },
-    (error) => {
-        console.log(error)
-    },
-    () => {
-        console.log("Completed!")
-    }
-)*/
-
 // ==============================================================================
 // DIBUJO
 // ==============================================================================
 
 draw_observer(player1.get_observable(), player1, player2)
 draw_observer(player2.get_observable(), player1, player2)
-
-/*player1.get_observable().subscribe(
-    (x) => {
-        if (x.type === REDRAW) {
-            const target = x.target === PLAYER_1 ? player1.get_container() : player2.get_container()
-            update_current_piece(target, x["old"], x["updated"])
-        }
-    },
-    (error) => {
-        console.log(error)
-    },
-    () => {
-        console.log("Completed!")
-    }
-)*/
 
 $(document).on('click', '#start-button', function () {
     player1.set_current_piece(generate_piece(START_X, START_Y))
