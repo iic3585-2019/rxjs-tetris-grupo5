@@ -129,6 +129,10 @@ export default class Tetris {
     }
 
     add_combo_rows(rows){
+        if(rows>4){
+            rows = 4
+        }
+        
         let new_matrix = []
         _.range(rows).forEach((row) => {
             let new_row = []

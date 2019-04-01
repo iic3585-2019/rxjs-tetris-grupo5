@@ -19,7 +19,43 @@ const PIECES = [
             "center": 0,
             "color": "#F7990C"
         }
-    }
+    },
+    // T
+    (x, y) => {
+        return {
+            "name": "T",
+            "points": [[x, y], [x + 1, y], [x + 2, y], [x + 1, y - 1]],
+            "center": 1,
+            "color": "#40FF00"
+        }
+    },
+    // L
+    (x, y) => {
+        return {
+            "name": "L",
+            "points": [[x, y], [x, y - 1], [x, y - 2], [x +1, y - 2]],
+            "center": 2,
+            "color": "#58FAF4"
+        }
+    },
+    // I
+    (x, y) => {
+        return {
+            "name": "I",
+            "points": [[x, y], [x, y - 1], [x, y - 2], [x, y - 3]],
+            "center": 2,
+            "color": "#FA58F4"
+        }
+    },
+    // LI
+    (x, y) => {
+        return {
+            "name": "LI",
+            "points": [[x, y], [x, y - 1], [x, y - 2], [x - 1, y - 2]],
+            "center": 2,
+            "color": "#B45F04"
+        }
+    },
 ]
 
 export const generate_piece = (x, y) => {

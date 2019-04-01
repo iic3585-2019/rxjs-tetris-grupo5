@@ -33,9 +33,7 @@ export const movement_observer = (observable, player1, player2) => {
                         //Se mueven las piezas restantes
                         player.fall_pieces(combo)
                         //Se envian las filas del combo al enemigo
-                        enemy.show_matrix()
                         enemy.add_combo_rows(combo.length)
-                        enemy.show_matrix()
                         player.dispatch_event({ "target": x.target, "type": GRID})
                         player.dispatch_event({ "target": enemy_target, "type": GRID})
                         
@@ -43,12 +41,16 @@ export const movement_observer = (observable, player1, player2) => {
                     
                     // Se setea una nueva pieza
                     player.set_new_current_piece()
-                    if(player.check_game_over(player.get_current_piece())){
-                        game_over(x.target)
-                    }
-
                     // Se dibuja la pieza por primera vez
                     player.dispatch_event({ "target": x.target, "type": DRAW, "piece": player.get_current_piece() })
+                    // Se chequea si la nueva pieza hizo perder al jugador
+                    if(player.check_game_over(player.get_current_piece())){
+                        game_over(x.target)
+                        // CORREGIR UNSUBSCRIBE
+                        observable.unsubscribe()
+                    }
+
+                    
                 }
 
                 // Caso en que la pieza sigue en juego, entonces se setea como current piece
