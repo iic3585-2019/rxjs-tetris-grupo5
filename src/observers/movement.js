@@ -12,14 +12,9 @@ export const movement_observer = (observable, player1, player2) => {
             if (x.type === MOVEMENT) {
                 let moved_piece = move(player.get_current_piece(), x.direction)
 
-                /* TODO: Acá se tiene quje cheackear que la pieza movida sea válida. 
-                Tiene que cumlir lo siguiente
-                - No estar chocando con otra cosa 
-                */
-
-                if (player.is_piece_invalid(moved_piece)) {
-                    return null
-                }
+                // if (player.is_piece_invalid(moved_piece)) {
+                //     return null
+                // }
 
                 // Si la pieza es válida se debe re-dibuja
                 player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": moved_piece })
@@ -67,15 +62,10 @@ export const movement_observer = (observable, player1, player2) => {
             else if (x.type === ROTATE) {
                 let spined_piece = spin(player.get_current_piece(), x.direction)
 
-                if (player.is_piece_invalid(spined_piece)) {
-                    console.log("LA PIEZA ES INVALIDA")
-                    return null
-                }
-
-                /*
-                TODO: Por simplicidad, se va solo a checkear si es que la pieza rotada no se sale de la grilla y si no choca con nada.
-                Normalmente también se tendría que ver que si va a chocar permita la rotación moviendo la pieza a un lado
-                */
+                // if (player.is_piece_invalid(spined_piece)) {
+                //     // console.log("LA PIEZA ES INVALIDA")
+                //     //return null
+                // }
 
                 player.dispatch_event({ "target": x.target, "type": REDRAW, "old": player.get_current_piece(), "updated": spined_piece })
 
