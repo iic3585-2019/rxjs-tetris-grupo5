@@ -19,8 +19,8 @@ export default class Tetris {
             this.pieces_as_matrix.push(new_row)
         })
 
-        this.subject = new Subject();
-        this.observable = this.subject.asObservable();
+        this.subject = new Subject()
+        this.observable = this.subject.asObservable()
     }
 
     append_static_piece(piece) {
@@ -51,6 +51,10 @@ export default class Tetris {
         this.subject.next(event)
     }
 
+    close_observable() {
+        this.subject.complete()
+    }
+
     get_observable() {
         return this.observable
     }
@@ -67,7 +71,7 @@ export default class Tetris {
         return this.container_id
     }
 
-    get_matrix(){
+    get_matrix() {
         return this.pieces_as_matrix
     }
 
@@ -88,7 +92,7 @@ export default class Tetris {
     check_game_over(piece) {
         return piece["points"].some((point) => {
             // Caso en que algun punto de la pieza topa con el techo
-            if (point[1] === NUMBER_OF_ROWS-1 && this.check_landing(piece)) {
+            if (point[1] === NUMBER_OF_ROWS - 1 && this.check_landing(piece)) {
                 return true
             }
         })
@@ -104,52 +108,52 @@ export default class Tetris {
 
     check_score_row() {
         let scored_rows = []
-        this.pieces_as_matrix.forEach((row,index) => {
-            if(!row.some(x => x===0)){
+        this.pieces_as_matrix.forEach((row, index) => {
+            if (!row.some(x => x === 0)) {
                 scored_rows.push(index)
             }
         })
-        console.log("scored_rows= "+scored_rows)
-        return scored_rows        
+        return scored_rows
     }
 
     delete_combo_rows(rows) {
         this.pieces_as_matrix.forEach((row, index) => {
-            if(_.includes(rows,index)){
-                this.pieces_as_matrix[index]=row.map(elem => 0)
+            if (_.includes(rows, index)) {
+                this.pieces_as_matrix[index] = row.map(elem => 0)
             }
         })
     }
 
-    fall_pieces(rows){
-        this.pieces_as_matrix.forEach((row,indexY) => {
+    fall_pieces(rows) {
+        this.pieces_as_matrix.forEach((row, indexY) => {
             let count = rows.filter(elem => elem < indexY).length
-            this.pieces_as_matrix[indexY-count] = row            
+            this.pieces_as_matrix[indexY - count] = row
         })
     }
 
-    add_combo_rows(rows){
-        if(rows>4){
+    add_combo_rows(rows) {
+        if (rows > 4) {
             rows = 4
         }
-        
+
         let new_matrix = []
         _.range(rows).forEach((row) => {
             let new_row = []
             _.range(NUMBER_OF_COLUMNS).forEach((col) => {
                 new_row.push(1)
             })
-            new_row[_.random(0, NUMBER_OF_COLUMNS-1)] = 0
+            new_row[_.random(0, NUMBER_OF_COLUMNS - 1)] = 0
             new_matrix.push(new_row)
         })
 
-        this.pieces_as_matrix.forEach((row,indexY) => {
-            if(indexY+rows < NUMBER_OF_ROWS-1){
-                new_matrix.push(row)            
+        this.pieces_as_matrix.forEach((row, indexY) => {
+            if (indexY + rows < NUMBER_OF_ROWS - 1) {
+                new_matrix.push(row)
             }
-            
+
         })
         this.pieces_as_matrix = new_matrix
     }
+
 
 }

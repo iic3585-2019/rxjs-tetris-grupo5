@@ -33,7 +33,7 @@ const PIECES = [
     (x, y) => {
         return {
             "name": "L",
-            "points": [[x, y], [x, y - 1], [x, y - 2], [x +1, y - 2]],
+            "points": [[x, y], [x, y - 1], [x, y - 2], [x + 1, y - 2]],
             "center": 2,
             "color": "#58FAF4"
         }
@@ -74,7 +74,22 @@ export const spin = (piece, rotation) => {
     const [x, y] = piece["points"][piece["center"]]
     const centered_points = center_points(piece["points"], x, y)
 
-    return { ...piece, "points": restore_points(centered_points.map(transformation), x, y) }
+    let spined_points = restore_points(centered_points.map(transformation), x, y)
+
+    const is_invalid = spined_points.some((point) => {
+        if ((point[1] < 0) || (point[1] >= NUMBER_OF_ROWS)) {
+            return true
+        }
+        else if ((point[0] < 0) || (point[0] >= NUMBER_OF_COLUMNS)) {
+            return true
+        }
+    })
+    if (is_invalid) {
+        return piece
+    }
+    else {
+        return { ...piece, "points": spined_points }
+    }
 }
 
 

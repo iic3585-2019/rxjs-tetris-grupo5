@@ -72,23 +72,23 @@ $(document).on('click', '#start-button', function () {
                 break
             // Left Arrow
             case 37:
-                player1.dispatch_event({ "target": PLAYER_2, "type": MOVEMENT, "direction": LEFT })
+                player2.dispatch_event({ "target": PLAYER_2, "type": MOVEMENT, "direction": LEFT })
                 break
             // Right Arrow
             case 39:
-                player1.dispatch_event({ "target": PLAYER_2, "type": MOVEMENT, "direction": RIGHT })
+                player2.dispatch_event({ "target": PLAYER_2, "type": MOVEMENT, "direction": RIGHT })
                 break
             // Down Arrow
             case 40:
-                player1.dispatch_event({ "target": PLAYER_2, "type": MOVEMENT, "direction": DOWN })
+                player2.dispatch_event({ "target": PLAYER_2, "type": MOVEMENT, "direction": DOWN })
                 break
             // ,
             case 188:
-                player1.dispatch_event({ "target": PLAYER_2, "type": ROTATE, "direction": LEFT })
+                player2.dispatch_event({ "target": PLAYER_2, "type": ROTATE, "direction": LEFT })
                 break
             // .
             case 190:
-                player1.dispatch_event({ "target": PLAYER_2, "type": ROTATE, "direction": RIGHT })
+                player2.dispatch_event({ "target": PLAYER_2, "type": ROTATE, "direction": RIGHT })
                 break
             default:
                 console.log("Has apretado la tecla con el sig cod: " + event.keyCode)
