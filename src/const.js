@@ -9,6 +9,7 @@ export const ROTATE = "ROTATE"
 
 export const REDRAW = "REDRAW"
 export const DRAW = "DRAW"
+export const GRID = "GRID"
 
 // Tetris settings
 export const NUMBER_OF_COLUMNS = 8

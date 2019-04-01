@@ -1,5 +1,6 @@
-import { PLAYER_1, REDRAW, DRAW } from "../const";
-import { update_current_piece, draw_current_piece } from "../draw";
+import { PLAYER_1, REDRAW, DRAW,GRID, NUMBER_OF_COLUMNS } from "../const";
+import { update_current_piece, draw_current_piece, paint_block } from "../draw";
+var _ = require('lodash')
 
 export const draw_observer = (observable, player1, player2) => {
     observable.subscribe(
@@ -10,6 +11,12 @@ export const draw_observer = (observable, player1, player2) => {
             }
             else if (x.type === DRAW) {
                 draw_current_piece(player.get_container(), x.piece)
+            }
+            else if (x.type == GRID){
+                x.rows.forEach(element => {
+                    _.range(NUMBER_OF_COLUMNS).forEach(
+                        value => paint_block(player.get_container(),[value, element], "gray"))
+                });
             }
         },
         (error) => {

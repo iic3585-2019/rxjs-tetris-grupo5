@@ -38,7 +38,7 @@ const generate_row = (row_number, number_of_cols) => {
     return html
 }
 
-const paint_block = (target, [x, y], color) => {
+export const paint_block = (target, [x, y], color) => {
     $(`#${target} #row-${y} #col-${x} > .block`).css({ "background-color": color })
 
 }

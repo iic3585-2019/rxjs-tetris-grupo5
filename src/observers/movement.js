@@ -1,4 +1,4 @@
-import { PLAYER_1, REDRAW, MOVEMENT, ROTATE, DRAW } from "../const";
+import { PLAYER_1, REDRAW, MOVEMENT, ROTATE, DRAW, GRID} from "../const";
 import { move, spin } from "../pieces";
 var _ = require('lodash')
 
@@ -21,8 +21,10 @@ export const movement_observer = (observable, player1, player2) => {
                 if (player.check_landing(moved_piece)) {
                     // Se añade la pieza como estatica
                     player.append_static_piece(moved_piece)
-                    
-                    player.check_score_row()
+
+                    let combo = player.check_score_row()
+                    player.delete_combo_rows(combo)
+                    player.dispatch_event({ "target": x.target, "type": GRID, "rows":combo})
                     // Se checkea si se hizo combo
 
                     // Se setea una nueva pieza

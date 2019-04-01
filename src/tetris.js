@@ -100,4 +100,12 @@ export default class Tetris {
         return scored_rows        
     }
 
+    delete_combo_rows(rows) {
+        this.pieces_as_matrix.forEach((row, index) => {
+            if(_.includes(rows,index)){
+                this.pieces_as_matrix[index]=row.map(elem => 0)
+            }
+        })
+    }
+
 }
