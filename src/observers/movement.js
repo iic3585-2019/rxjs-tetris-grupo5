@@ -1,11 +1,14 @@
-import { PLAYER_1, REDRAW, MOVEMENT, ROTATE, DRAW, GRID} from "../const";
+import { PLAYER_1, PLAYER_2, REDRAW, MOVEMENT, ROTATE, DRAW, GRID} from "../const";
 import { move, spin } from "../pieces";
+import {game_over} from "../draw";
 var _ = require('lodash')
 
 export const movement_observer = (observable, player1, player2) => {
     observable.subscribe(
         (x) => {
             const player = x.target === PLAYER_1 ? player1 : player2
+            const enemy = x.target === PLAYER_1 ? player2 : player1
+            const enemy_target = x.target === PLAYER_1 ? PLAYER_2 : PLAYER_1
             if (x.type === MOVEMENT) {
                 let moved_piece = move(player.get_current_piece(), x.direction)
 
@@ -22,13 +25,27 @@ export const movement_observer = (observable, player1, player2) => {
                     // Se añade la pieza como estatica
                     player.append_static_piece(moved_piece)
 
-                    let combo = player.check_score_row()
-                    player.delete_combo_rows(combo)
-                    player.dispatch_event({ "target": x.target, "type": GRID, "rows":combo})
                     // Se checkea si se hizo combo
-
+                    let combo = player.check_score_row()
+                    if (combo.length != 0){
+                        //Se eliminan las filas del combo
+                        player.delete_combo_rows(combo)
+                        //Se mueven las piezas restantes
+                        player.fall_pieces(combo)
+                        //Se envian las filas del combo al enemigo
+                        enemy.show_matrix()
+                        enemy.add_combo_rows(combo.length)
+                        enemy.show_matrix()
+                        player.dispatch_event({ "target": x.target, "type": GRID})
+                        player.dispatch_event({ "target": enemy_target, "type": GRID})
+                        
+                    }
+                    
                     // Se setea una nueva pieza
                     player.set_new_current_piece()
+                    if(player.check_game_over(player.get_current_piece())){
+                        game_over(x.target)
+                    }
 
                     // Se dibuja la pieza por primera vez
                     player.dispatch_event({ "target": x.target, "type": DRAW, "piece": player.get_current_piece() })

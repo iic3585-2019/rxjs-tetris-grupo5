@@ -13,9 +13,15 @@ export const draw_observer = (observable, player1, player2) => {
                 draw_current_piece(player.get_container(), x.piece)
             }
             else if (x.type == GRID){
-                x.rows.forEach(element => {
-                    _.range(NUMBER_OF_COLUMNS).forEach(
-                        value => paint_block(player.get_container(),[value, element], "gray"))
+                player.get_matrix().forEach((row, indexY) => {
+                    row.forEach((elem, indexX)=>{
+                        if(elem === 0){
+                            paint_block(player.get_container(),[indexX, indexY], "gray")
+                        }
+                        else{
+                            paint_block(player.get_container(),[indexX, indexY], "red")
+                        }    
+                    })
                 });
             }
         },

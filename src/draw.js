@@ -66,11 +66,11 @@ export const update_current_piece = (target, old, updated) => {
     paint_piece(target, updated, updated["color"])
 }
 
-export const game_over = (winner) => {
+export const game_over = (loser) => {
 
-    const winner_message = (winner === PLAYER_1) ? "El jugador 1 ha ganado!" : "El jugador 2 ha ganado!"
+    const loser_message = (loser === PLAYER_1) ? "El jugador 2 ha ganado!" : "El jugador 1 ha ganado!"
 
     $("#overlay").css("display", "block")
-    $(".overlay-text").append("<br/ >" + winner_message)
+    $(".overlay-text").append("<br/ >" + loser_message)
 
 }
