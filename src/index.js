@@ -42,6 +42,8 @@ $(document).on('click', '#start-button', function () {
     // Cuando alguno gane hay que matar el intervalo con e clear
     // clearInterval(i)
 
+    $('#start-button').hide("slow")
+
     // ================================================================================================
     // TECLAS
     // ================================================================================================
