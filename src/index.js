@@ -2,7 +2,7 @@ import $ from 'jquery'
 window.jQuery = $
 window.$ = $
 
-import { initialize_grid, draw_current_piece } from "./draw"
+import { initialize_grid, draw_current_piece, game_over } from "./draw"
 import Tetris from "./tetris"
 import { PLAYER_1, PLAYER_2, LEFT, MOVEMENT, RIGHT, ROTATE, DOWN, SECS_DOWN } from './const'
 import { movement_observer } from './observers/movement';
@@ -39,7 +39,10 @@ $(document).on('click', '#start-button', function () {
         // player2.dispatch_event({ "target": PLAYER_2, "type": MOVEMENT, "direction": DOWN })
     }, 1000 * SECS_DOWN)
 
+    // Cuando alguno gane hay que matar el intervalo con e clear
     // clearInterval(i)
+
+    $('#start-button').hide("slow")
 
     // ================================================================================================
     // TECLAS
@@ -70,6 +73,11 @@ $(document).on('click', '#start-button', function () {
                 console.log("Has apretado la tecla con el sig cod: " + event.keyCode)
         }
     })
+})
+
+// TODO: Cuando alguno gane hay que llamar a la función game_over. Por ahora hay un boton para que se muestre
+$(document).on('click', '#game-over-button', () => {
+    game_over(PLAYER_1)
 })
 
 // draw_static_pieces(player1.get_container(), player1.get_static_pieces())
